@@ -2,6 +2,7 @@ on:
   push:
     branches:
       - master
+      - test-gitee-sync
     tags:
       - "*"
 
@@ -13,16 +14,32 @@ jobs:
     steps:
       - name: Checkout source code
         uses: actions/checkout@v4
-      - name: Mirror GitHub to Gitee
-        uses: Yikun/hub-mirror-action@v1.4
-        with:
-          src: github/gogf
-          dst: gitee/johng
-          dst_key: ${{ secrets.GITEE_PRIVATE_KEY }}
-          dst_token: ${{ secrets.GITEE_TOKEN }}
-          src_account_type: org
-          dst_account_type: user
-          timeout: 600
-          debug: true
-          force_update: true
-          static_list: "gf"
+
+      - name: Set up SSH
+        env:
+          GITEE_PRIVATE_KEY: ${{ secrets.GITEE_PRIVATE_KEY }}
+        run: |
+          mkdir -p ~/.ssh
+          echo $GITEE_PRIVATE_KEY
+          echo "$GITEE_PRIVATE_KEY" > ~/.ssh/id_rsa
+          chmod 600 ~/.ssh/id_rsa
+          ssh-keyscan gitee.com >> ~/.ssh/known_hosts
+
+      - name: Push to Gitee
+        run: |
+          git remote add gitee git@gitee.com:johng/gf.git
+          git push -f gitee master
+
+#      - name: Mirror GitHub to Gitee
+#        uses: Yikun/hub-mirror-action@v1.4
+#        with:
+#          src: github/gogf
+#          dst: gitee/johng
+#          dst_key: ${{ secrets.GITEE_PRIVATE_KEY }}
+#          dst_token: ${{ secrets.GITEE_TOKEN }}
+#          src_account_type: org
+#          dst_account_type: user
+#          timeout: 600
+#          debug: true
+#          force_update: true
+#          static_list: "gf"
