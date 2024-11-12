@@ -23,7 +23,6 @@ jobs:
           echo ${{ secrets.GITEE_PRIVATE_SSH_KEY }}
           echo ${{ secrets.GITEE_TOKEN }}
           echo ${{ vars.TEST_A }}
-          echo ${{ TEST_A }}
           env
           chmod 600 ~/.ssh/id_rsa
           ssh-keyscan gitee.com >> ~/.ssh/known_hosts
