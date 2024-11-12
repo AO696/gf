@@ -18,18 +18,17 @@ jobs:
       - name: Set up SSH
         run: |
           mkdir -p ~/.ssh
-          echo ${{ vars.GITEE_PRIVATE_SSH_KEY }} > ~/.ssh/id_rsa
-          cat ~/.ssh/id_rsa
-          echo ${{ secrets.GITEE_PRIVATE_SSH_KEY }}
-          echo ${{ secrets.GITEE_TOKEN }}
-          env
+          echo ${{ env.GITEE_PRIVATE_SSH_KEY }}
+          echo ${{ vars.TEST_A }}
+          echo ${{ secrets.GITEE_PRIVATE_KEY }} > ~/.ssh/id_rsa
+          ll ~/.ssh/
           chmod 600 ~/.ssh/id_rsa
           ssh-keyscan gitee.com >> ~/.ssh/known_hosts
 
-      - name: Push to Gitee
-        run: |
-          git remote add gitee git@gitee.com:johng/gf.git
-          git push -f gitee test/gitee-sync
+#      - name: Push to Gitee
+#        run: |
+#          git remote add gitee git@gitee.com:johng/gf.git
+#          git push -f gitee test/gitee-sync
 
 #      - name: Mirror GitHub to Gitee
 #        uses: Yikun/hub-mirror-action@v1.4
