@@ -21,8 +21,8 @@ jobs:
           GITEE_TOKEN: ${{ secrets.GITEE_TOKEN }}
         run: |
           mkdir -p ~/.ssh
-          echo ${{ env.GITEE_PRIVATE_SSH_KEY }}
-          echo ${{ vars.GITEE_TOKEN }}
+          echo ${{ secrets.GITEE_TOKEN }}
+          echo ${{ secrets.GITEE_TOKEN }}
           echo "$CODECOV_TOKEN"
           echo "$GITEE_PRIVATE_KEY" > ~/.ssh/id_rsa
           ls -l ~/.ssh/
