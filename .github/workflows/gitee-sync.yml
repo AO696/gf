@@ -18,10 +18,12 @@ jobs:
       - name: Set up SSH
         env:
           GITEE_PRIVATE_KEY: ${{ secrets.GITEE_PRIVATE_KEY }}
+          CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
         run: |
           mkdir -p ~/.ssh
           echo ${{ env.GITEE_PRIVATE_SSH_KEY }}
           echo ${{ vars.TEST_A }}
+          echo "$CODECOV_TOKEN"
           echo "$GITEE_PRIVATE_KEY" > ~/.ssh/id_rsa
           ls -l ~/.ssh/
           chmod 600 ~/.ssh/id_rsa
