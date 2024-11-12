@@ -16,12 +16,14 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Set up SSH
+        env:
+          GITEE_PRIVATE_KEY: ${{ secrets.GITEE_PRIVATE_KEY }}
         run: |
           mkdir -p ~/.ssh
           echo ${{ env.GITEE_PRIVATE_SSH_KEY }}
           echo ${{ vars.TEST_A }}
-          echo ${{ secrets.GITEE_PRIVATE_KEY }} > ~/.ssh/id_rsa
-          ll ~/.ssh/
+          echo "$GITEE_PRIVATE_KEY" > ~/.ssh/id_rsa
+          ls -l ~/.ssh/
           chmod 600 ~/.ssh/id_rsa
           ssh-keyscan gitee.com >> ~/.ssh/known_hosts
 
